@@ -1,0 +1,112 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block style %}
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+
+    <style>
+        /* Add some basic styling */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        #tv_chart_container {
+            width: 75%;
+            height: 500px;
+        }
+    </style>
+
+{% endblock %}
+
+{% block index %}
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid" style="margin-left: 15%;">
+        <div class="row content">
+            <br>
+
+            <div class="col-sm-9">
+                <div class="well">
+                    <h4 style="text-align: center;">Dashboard</h4>
+                </div>
+                <!-- small cards -->
+                <div class="row" style="text-align: center;">
+                    <div class="col-sm-3">
+                        <div class="well" style="background-color:#EEA5A6;">
+                            <h4>Users</h4>
+                            <p>{{ users_count }}</p>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="well" style="background-color: #E493B3;">
+                            <h4>Stocks</h4>
+                            <p>60</p>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="well" style="background-color: #B784B7">
+                            <h4>Notifications</h4>
+                            <p>{{notify_users}}</p>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="well" style="background-color: #8E7AB5;">
+                            <h4>Stock Count</h4>
+                            <p >50</p>
+                        </div>
+                    </div>
+                </div>
+
+                <br>
+
+
+            </div>
+           
+
+        </div>
+        <div id="tv_chart_container"></div>
+    </div>
+    
+
+</div>
+{% endblock %}
+
+{% block footer %}
+{% endblock %}
+
+{% block script %}
+    
+<script>
+    // Initialize TradingView chart with candlestick graph
+    new TradingView.widget(
+        {
+            "autosize": true,
+            "symbol": "AAPL", // Symbol for the stock (e.g., Apple Inc.)
+            "interval": "D", // Interval (D = daily)
+            "timezone": "Etc/UTC",
+            "theme": "light", // Chart theme (light or dark)
+            "style": "1", // Chart style (1 = candlesticks)
+            "toolbar_bg": "#f1f3f6",
+            "enable_publishing": false,
+            "hide_side_toolbar": false,
+            "allow_symbol_change": true,
+            "studies": [
+                {
+                    "id": "sma", // Study ID (SMA = Simple Moving Average)
+                    "type": "sma", // Study type
+                    "title": "SMA", // Title of the study
+                    "length": 20, // Length of the moving average
+                    "color": "#ff6c00", // Color of the indicator line
+                }
+            ],
+            "container_id": "tv_chart_container"
+        }
+    );
+</script>
+
+
+{% endblock %}

@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Login{% endblock %}
+
+{% block style %}
+<style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #ddd;
+        }
+
+        h1 {
+            color:white;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 80%;
+            margin-bottom: 20px;
+            background-color: #ddd;
+            color: #000;
+            margin-left: 5%;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+            color: #000;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            color: #000;
+        }
+
+        img {
+            display: block;
+            margin: 20px auto;
+            max-width: 100%;
+        }
+</style>
+{% endblock %}
+
+{% block index %}
+{% endblock %}
+
+{% block content %}
+<div style="text-align: center;">
+    <form action="{% url 'analyze_stocks' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label for="selected_files">Select CSV files:</label>
+        <br>
+        <input type="file" name="selected_files" id="selected_files" multiple>
+        <br><br>
+        <input type="submit" value="Upload and Analyze" style="color: #000;">
+    </form>
+</div>
+<div style="margin-bottom: 20%;">
+<h1>Average Closing Prices by Symbol</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Symbol</th>
+                <th>Average Closing Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for symbol, closing_price in average_closing_price.items %}
+            <tr>
+                <td>{{ symbol }}</td>
+                <td>{{ closing_price }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+
+<img src="{% static 'graph/box_plot.png' %}" alt="graph1"  width="80%">
+    <img src="{% static 'graph/correlation_heatmap.png' %}" alt="graph2"  width="80%">
+    <img src="{% static 'graph/pair_plot.png' %}" alt="graph3"  width="80%">
+    <img src="{% static 'graph/plot_avg_closing.png' %}" alt="graph4" width="80%">
+    {% if file_paths %}
+    <h2>Uploaded CSV Files</h2>
+    <ul>
+        {% for file_path in file_paths %}
+            <li>{{ file_path }} <button type="button" onclick="removeFile('{{ file_path }}')">Remove</button></li>
+        {% endfor %}
+    </ul>
+{% endif %}
+
+
+</div>
+<div style="margin-top: 20%;">
+<br>
+</div>
+{% endblock %}
+
+{% block footer %}
+{% endblock %}
+
+{% block script %}
+<script>
+    function removeFile(filePath) {
+        if (confirm('Are you sure you want to remove this file?')) {
+            // Send an AJAX request to remove the file from the list
+            // You can use JavaScript fetch or any AJAX library like jQuery
+            // After successful removal, you may want to update the UI accordingly
+            alert('File removed: ' + filePath);
+        }
+    }
+</script>
+{% endblock %}

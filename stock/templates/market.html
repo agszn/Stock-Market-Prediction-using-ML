@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Login{% endblock %}
+
+{% block style %}
+<style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        img {
+            display: block;
+            margin: 20px auto;
+            max-width: 100%;
+        }
+</style>
+{% endblock %}
+
+{% block index %}
+{% endblock %}
+
+{% block content %}
+<div style="text-align: center;">
+    <form action="{% url 'analyze_stocks' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label for="file_select1">Select dataset 1:</label>
+        <select name="selected_files" id="file_select1">
+            {% for file_path in file_paths %}
+                <option value="{{ file_path }}">{{ file_path|cut:"data" }}</option>
+            {% endfor %}
+        </select>
+        <br><br>
+        <label for="file_select2">Select dataset 2:</label>
+        <select name="selected_files" id="file_select2">
+            {% for file_path in file_paths %}
+                <option value="{{ file_path }}">{{ file_path|cut:"data" }}</option>
+            {% endfor %}
+        </select>
+        <br><br>
+        <label for="file_select3">Select dataset 3:</label>
+        <select name="selected_files" id="file_select3">
+            {% for file_path in file_paths %}
+                <option value="{{ file_path }}">{{ file_path|cut:"data" }}</option>
+            {% endfor %}
+        </select>
+        <br><br>
+        <label for="file_select4">Select dataset 4:</label>
+        <select name="selected_files" id="file_select4">
+            {% for file_path in file_paths %}
+                <option value="{{ file_path }}">{{ file_path|cut:"data" }}</option>
+            {% endfor %}
+        </select>
+        <br><br>
+        <input type="submit" value="Upload and Analyze">
+    </form>
+</div>
+{% endblock %}
+
+{% block script %}
+{% endblock %}

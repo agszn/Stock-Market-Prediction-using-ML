@@ -1,0 +1,35 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analysis Results</title>
+    <!-- Add any CSS stylesheets or libraries you want to use -->
+</head>
+<body>
+    <h1>Stock Analysis</h1>
+    
+    <form action="{% url 'analyze_stocks' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label for="scrip1_file">Upload CSV file for Scrip 1:</label>
+        <input type="file" id="scrip1_file" name="scrip1_file"><br><br>
+        
+        <label for="scrip2_file">Upload CSV file for Scrip 2:</label>
+        <input type="file" id="scrip2_file" name="scrip2_file"><br><br>
+        
+        <label for="scrip3_file">Upload CSV file for Scrip 3:</label>
+        <input type="file" id="scrip3_file" name="scrip3_file"><br><br>
+        
+        <input type="submit" value="Submit">
+    </form>
+    
+
+    <!-- Display the heatmap plot -->
+    {% if heatmap_plot_path %}
+        <h2>Correlation between Closing Prices for Different Stocks</h2>
+        <img src="{% static heatmap_plot_path %}" alt="Heatmap Plot">
+    {% endif %}
+
+</body>
+</html>
